@@ -11,5 +11,6 @@ public interface UserVinylDao {
 
     List<VinylModel> find(Integer user_id) throws SQLException;
     boolean save(String username, String title) throws SQLException;
-    boolean delete(Integer vinyl_id) throws SQLException;
+    boolean saveNew(String username, String author, String title) throws SQLException;
+    boolean delete(Integer user_id, Integer vinyl_id) throws SQLException;
 }

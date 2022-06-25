@@ -8,11 +8,11 @@
 <div class="w3-container w3-padding">
     <div class="w3-card-4">
         <div class="w3-container w3-center w3-green">
-            <h2>Add new vinyl to common collection</h2>
+            <h2>Add existing vinyl to user's collection</h2>
         </div>
         <form method="post" class="w3-selection w3-light-grey w3-padding">
-            <label>Author:
-                <input type="text" name="author" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%"><br />
+            <label>Username:
+                <input type="text" name="username" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%"><br />
             </label>
             <label>Title:
                 <input type="text" name="title" class="w3-input w3-animate-input w3-border w3-round-large" style="width: 30%"><br />

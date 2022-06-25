@@ -9,9 +9,11 @@
 <div class="w3-container w3-padding">
     <div class="w3-card-4">
         <div class="w3-container w3-center w3-green">
-            <h2>Vinyl Collection</h2>
+            <h2>User's Vinyl Collection</h2>
         </div>
-        <p><a href='<c:url value="/add-vinyl" />'>Add new</a></p>
+        <p><a href='<c:url value="/add-new-user-vinyl" />'>Add new vinyl to the Collection</a></p>
+        <p><a href='<c:url value="/add-user-vinyl" />'>Add existing vinyl to the Collection</a></p>
+
         <table>
             <thead>
             <tr>
@@ -21,6 +23,7 @@
             </tr>
             </thead>
             <tbody>
+            <c:set var="userid" value="${userId}" scope="page" />
             <c:set var="count" value="0" scope="page" />
             <c:forEach var="vinyl" items="${vinylList}">
                 <c:set var="count" value="${count + 1}" scope="page" />
@@ -28,8 +31,7 @@
                     <td>${count}</td>
                     <td>${vinyl.author}</td>
                     <td>${vinyl.title}</td>
-                    <td><a href="/ServletApp_war_exploded/delete-user-vinyl?id=<c:out value='${vinyl.id}' />
-                                                    &user-id=<c:out value='${user-id}' />">Delete from the Collection</a>
+                    <td><a href="/delete-user-vinyl?id=<c:out value="${vinyl.id}" />&userid=<c:out value="${userid}" />">Delete from the Collection</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -39,7 +41,7 @@
 </div>
 
 <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/ServletApp_war_exploded'">Back to main</button>
+    <button class="w3-btn w3-round-large" onclick="location.href='/'">Back to main</button>
 </div>
 </body>
 </html>

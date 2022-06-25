@@ -26,8 +26,8 @@
                 <tr>
                     <td>${count}</td>
                     <td>${user.username}</td>
-                    <td><a href="/ServletApp_war_exploded/list-user-vinyl?id=<c:out value='${user.id}' />">Vinyl Collection</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp; <a href="/ServletApp_war_exploded/delete-user?id=<c:out value='${user.id}' />">Delete</a>
+                    <td><a href="/list-user-vinyl?id=<c:out value='${user.id}' />">Vinyl Collection</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp; <a href="/delete-user?id=<c:out value='${user.id}' />">Delete</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -37,7 +37,7 @@
 </div>
 
 <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/ServletApp_war_exploded'">Back to main</button>
+    <button class="w3-btn w3-round-large" onclick="location.href='/'">Back to main</button>
 </div>
 </body>
 </html>

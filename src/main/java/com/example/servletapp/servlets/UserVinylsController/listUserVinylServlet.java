@@ -30,8 +30,8 @@ public class listUserVinylServlet extends HttpServlet {
         }
 
         req.setAttribute("vinylList", listVinyl);
-        req.setAttribute("user-id", user_id);
+        req.setAttribute("userId", user_id);
 
-        getServletContext().getRequestDispatcher("/listUserVinyl.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/userVinyl/listUserVinyl.jsp").forward(req, resp);
     }
 }

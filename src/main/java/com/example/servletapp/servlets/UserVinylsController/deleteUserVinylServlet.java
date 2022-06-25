@@ -1,5 +1,6 @@
 package com.example.servletapp.servlets.UserVinylsController;
 
+import com.example.servletapp.Dao.UserVinylDaoClass;
 import com.example.servletapp.Dao.VinylDaoClass;
 
 import javax.servlet.ServletException;
@@ -11,15 +12,15 @@ import java.sql.SQLException;
 
 public class deleteUserVinylServlet extends HttpServlet {
 
-    private VinylDaoClass vinylDao = VinylDaoClass.getInstance();
+    private UserVinylDaoClass userVinylDao = UserVinylDaoClass.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         try {
-            String id = req.getParameter("id");
-            String user_id = req.getParameter("user-id");
-            vinylDao.delete(id);
+            Integer id = Integer.parseInt(req.getParameter("id"));
+            Integer user_id = Integer.parseInt(req.getParameter("userid"));
+            userVinylDao.delete(user_id, id);
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
         } catch (SQLException e) {
             getServletContext().getRequestDispatcher("/notfound.jsp").forward(req, resp);

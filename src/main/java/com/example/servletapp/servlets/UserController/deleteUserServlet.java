@@ -22,6 +22,7 @@ public class deleteUserServlet extends HttpServlet {
             userDao.delete(id);
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
         } catch (SQLException e) {
+            req.setAttribute("error", "User cannot be deleted now. Try to delete user's collection");
             getServletContext().getRequestDispatcher("/notfound.jsp").forward(req, resp);
         }
     }

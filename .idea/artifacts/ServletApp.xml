@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="ServletApp:war exploded">
-    <output-path>$PROJECT_DIR$/target/ServletApp-1.0-SNAPSHOT</output-path>
+  <artifact type="exploded-war" name="ServletApp">
+    <output-path>$PROJECT_DIR$/target/ServletApp</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>

@@ -23,6 +23,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>deleteUser</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.UserController.deleteUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/delete-user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>addVinyl</servlet-name>
         <servlet-class>com.example.servletapp.servlets.VinylController.addVinylServlet</servlet-class>
     </servlet>
@@ -65,6 +74,15 @@
     <servlet-mapping>
         <servlet-name>addVinylToCollection</servlet-name>
         <url-pattern>/add-user-vinyl</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addNewVinylToCollection</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.UserVinylsController.addNewUserVinylServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addNewVinylToCollection</servlet-name>
+        <url-pattern>/add-new-user-vinyl</url-pattern>
     </servlet-mapping>
 
     <servlet>

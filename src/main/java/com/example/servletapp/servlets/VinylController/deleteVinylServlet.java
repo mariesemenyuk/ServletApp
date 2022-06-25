@@ -24,6 +24,7 @@ public class deleteVinylServlet extends HttpServlet {
             vinylDao.delete(id);
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
         } catch (SQLException e) {
+            req.setAttribute("error", "Vinyl cannot be deleted");
             getServletContext().getRequestDispatcher("/notfound.jsp").forward(req, resp);
         }
     }
