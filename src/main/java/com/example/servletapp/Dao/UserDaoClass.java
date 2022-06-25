@@ -1,8 +1,7 @@
 package com.example.servletapp.Dao;
 
-import com.example.servletapp.ConnectionInstance;
+import com.example.servletapp.DataSource;
 import com.example.servletapp.models.UserModel;
-import com.example.servletapp.models.UserVinylModel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class UserDaoClass implements UserDao{
         List<UserModel> users = new ArrayList<>();
         String sql = "SELECT * FROM users";
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         Statement stat = conn.createStatement();
         ResultSet resultSet = stat.executeQuery(sql);
 
@@ -51,7 +50,7 @@ public class UserDaoClass implements UserDao{
     public boolean save(UserModel userModel) throws SQLException {
         String sql = "INSERT INTO users (username, real_name, password) VALUES (?, ?, ?)";
         boolean rowUpdated = false;
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         PreparedStatement stat = conn.prepareStatement(sql);
         stat.setString(1, userModel.getUsername());
         stat.setString(2, userModel.getRealName());
@@ -70,7 +69,7 @@ public class UserDaoClass implements UserDao{
         String sql = "DELETE FROM users WHERE id = ?";
         boolean rowDeleted = false;
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, Integer.parseInt(id));
         rowDeleted = statement.executeUpdate() > 0;

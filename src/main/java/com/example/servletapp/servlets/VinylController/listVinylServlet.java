@@ -3,7 +3,6 @@ package com.example.servletapp.servlets.VinylController;
 import com.example.servletapp.Dao.VinylDaoClass;
 import com.example.servletapp.models.VinylModel;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ public class listVinylServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/vinyl/listVinyl.jsp");
 
         List<VinylModel> listVinyl = null;
         try {

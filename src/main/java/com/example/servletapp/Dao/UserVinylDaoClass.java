@@ -2,6 +2,7 @@ package com.example.servletapp.Dao;
 
 import com.example.servletapp.ConnectionInstance;
 
+import com.example.servletapp.DataSource;
 import com.example.servletapp.models.VinylModel;
 
 import java.sql.*;
@@ -33,7 +34,7 @@ public class UserVinylDaoClass implements UserVinylDao{
         String author = "";
         String title = "";
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
 
         PreparedStatement stat = conn.prepareStatement(sql);
         stat.setInt(1, user_id);
@@ -60,7 +61,7 @@ public class UserVinylDaoClass implements UserVinylDao{
                 " FROM users, vinyl" +
                 " WHERE users.username = ? AND vinyl.title = ?";
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         PreparedStatement stat = conn.prepareStatement(sql);
         boolean rowSaved = false;
         stat.setString(1, username);
@@ -74,7 +75,7 @@ public class UserVinylDaoClass implements UserVinylDao{
 
         boolean rowSaved = false;
         boolean rowVinylSaved = false;
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         conn.setAutoCommit(false);
 
         String sql = "INSERT INTO vinyl (author, title) VALUES (?, ?)";
@@ -113,7 +114,7 @@ public class UserVinylDaoClass implements UserVinylDao{
         String sql = "DELETE FROM user_vinyls WHERE user_id = ? AND vinyl_id = ?";
         boolean rowDeleted = false;
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, user_id);
         statement.setInt(2, vinyl_id);

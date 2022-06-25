@@ -1,6 +1,7 @@
 package com.example.servletapp.Dao;
 
 import com.example.servletapp.ConnectionInstance;
+import com.example.servletapp.DataSource;
 import com.example.servletapp.models.VinylModel;
 
 import java.sql.*;
@@ -28,7 +29,7 @@ public class VinylDaoClass implements VinylDao{
         String author = "";
         String title = "";
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
 
         PreparedStatement stat = conn.prepareStatement(sql);
         stat.setInt(1, Integer.parseInt(id));
@@ -48,7 +49,7 @@ public class VinylDaoClass implements VinylDao{
         List<VinylModel> vinylInCollections = new ArrayList<>();
         String sql = "SELECT * FROM vinyl";
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         Statement stat = conn.createStatement();
         ResultSet resultSet = stat.executeQuery(sql);
 
@@ -67,7 +68,7 @@ public class VinylDaoClass implements VinylDao{
     public boolean save(VinylModel vinylModel) throws SQLException {
         String sql = "INSERT INTO vinyl (author, title) VALUES (?, ?)";
         boolean rowSaved = false;
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         PreparedStatement stat = conn.prepareStatement(sql);
         stat.setString(1, vinylModel.getAuthor());
         stat.setString(2, vinylModel.getTitle());
@@ -81,7 +82,7 @@ public class VinylDaoClass implements VinylDao{
         String sql = "UPDATE vinyl SET author = ?, title = ?";
         sql += " WHERE id = ?";
         boolean rowUpdated = false;
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         PreparedStatement stat = conn.prepareStatement(sql);
         stat.setString(1, vinylModel.getAuthor());
         stat.setString(2, vinylModel.getTitle());
@@ -97,7 +98,7 @@ public class VinylDaoClass implements VinylDao{
         String sql = "DELETE FROM vinyl WHERE id = ?";
         boolean rowDeleted = false;
 
-        Connection conn = ConnectionInstance.getInstance().connect();
+        Connection conn = DataSource.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, Integer.parseInt(id));
         rowDeleted = statement.executeUpdate() > 0;
