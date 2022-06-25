@@ -57,4 +57,31 @@
         <servlet-name>deleteVinyl</servlet-name>
         <url-pattern>/delete-vinyl</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addVinylToCollection</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.UserVinylsController.addUserVinylServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addVinylToCollection</servlet-name>
+        <url-pattern>/add-user-vinyl</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>listUserVinyl</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.UserVinylsController.listUserVinylServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>listUserVinyl</servlet-name>
+        <url-pattern>/list-user-vinyl</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteVinylFromCollection</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.UserVinylsController.deleteUserVinylServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteVinylFromCollection</servlet-name>
+        <url-pattern>/delete-user-vinyl</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -2,7 +2,7 @@ package com.example.servletapp.Dao;
 
 import com.example.servletapp.ConnectionInstance;
 import com.example.servletapp.models.UserModel;
-import com.example.servletapp.models.VinylModel;
+import com.example.servletapp.models.UserVinylModel;
 
 import java.sql.*;
 import java.util.ArrayList;

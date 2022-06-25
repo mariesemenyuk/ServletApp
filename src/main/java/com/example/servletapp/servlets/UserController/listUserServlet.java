@@ -30,6 +30,6 @@ public class listUserServlet extends HttpServlet {
 
         req.setAttribute("userList", listUsers);
 
-        getServletContext().getRequestDispatcher("/listUsers.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/users/listUsers.jsp").forward(req, resp);
     }
 }

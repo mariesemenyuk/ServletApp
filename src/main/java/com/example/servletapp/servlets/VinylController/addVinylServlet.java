@@ -19,7 +19,7 @@ public class addVinylServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("addVinyl.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/vinyl/addVinyl.jsp");
         requestDispatcher.forward(req, resp);
     }
 

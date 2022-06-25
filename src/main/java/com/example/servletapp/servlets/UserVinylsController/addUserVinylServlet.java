@@ -1,7 +1,9 @@
-package com.example.servletapp.servlets.UserController;
+package com.example.servletapp.servlets.UserVinylsController;
 
-import com.example.servletapp.Dao.UserDaoClass;
-import com.example.servletapp.models.UserModel;
+import com.example.servletapp.Dao.UserVinylDao;
+import com.example.servletapp.Dao.UserVinylDaoClass;
+import com.example.servletapp.Dao.VinylDaoClass;
+import com.example.servletapp.models.VinylModel;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,32 +13,30 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class addUserServlet extends HttpServlet {
+public class addUserVinylServlet extends HttpServlet {
 
-    private UserDaoClass userDao = UserDaoClass.getInstance();
+    private UserVinylDaoClass userVinylDao = UserVinylDaoClass.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users/addUser.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/addUserVinyl.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            addUser(req, resp);
+            addVinyl(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void addUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException{
+    private void addVinyl(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException{
         String username = req.getParameter("username");
-        String name = req.getParameter("name");
-        String password = req.getParameter("password");
-        UserModel newUser = new UserModel(username, name, password);
-        userDao.save(newUser);
+        String title = req.getParameter("title");
+        userVinylDao.save(username, title);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(req, resp);
     }

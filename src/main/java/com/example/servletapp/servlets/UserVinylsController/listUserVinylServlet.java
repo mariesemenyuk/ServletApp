@@ -1,5 +1,6 @@
-package com.example.servletapp.servlets.VinylController;
+package com.example.servletapp.servlets.UserVinylsController;
 
+import com.example.servletapp.Dao.UserVinylDaoClass;
 import com.example.servletapp.Dao.VinylDaoClass;
 import com.example.servletapp.models.VinylModel;
 
@@ -12,23 +13,25 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class listVinylServlet extends HttpServlet {
+public class listUserVinylServlet extends HttpServlet {
 
-    private VinylDaoClass vinylDao = VinylDaoClass.getInstance();
+    private UserVinylDaoClass userVinylDao = UserVinylDaoClass.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/vinyl/listVinyl.jsp");
 
         List<VinylModel> listVinyl = null;
+        String user_id = "";
         try {
-            listVinyl = vinylDao.findAll();
+            user_id = req.getParameter("id");
+            listVinyl = userVinylDao.find(Integer.parseInt(user_id));
         } catch (SQLException e) {
-            e.printStackTrace();
+            getServletContext().getRequestDispatcher("/notfound.jsp").forward(req, resp);
         }
 
         req.setAttribute("vinylList", listVinyl);
+        req.setAttribute("user-id", user_id);
 
-        getServletContext().getRequestDispatcher("/vinyl/listVinyl.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/listUserVinyl.jsp").forward(req, resp);
     }
 }

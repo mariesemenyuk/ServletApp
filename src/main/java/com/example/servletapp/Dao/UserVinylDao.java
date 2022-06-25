@@ -1,4 +1,15 @@
 package com.example.servletapp.Dao;
 
-public interface UserVinylDao{
+import com.example.servletapp.models.UserVinylModel;
+import com.example.servletapp.models.VinylModel;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
+public interface UserVinylDao {
+
+    List<VinylModel> find(Integer user_id) throws SQLException;
+    boolean save(String username, String title) throws SQLException;
+    boolean delete(Integer vinyl_id) throws SQLException;
 }

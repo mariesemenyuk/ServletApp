@@ -23,7 +23,7 @@ public class editVinylServlet extends HttpServlet {
             VinylModel vinyl = vinylDao.find(id).get();
             if(vinyl!=null) {
                 req.setAttribute("vinyl", vinyl);
-                getServletContext().getRequestDispatcher("/editVinyl.jsp").forward(req, resp);
+                getServletContext().getRequestDispatcher("/vinyl/editVinyl.jsp").forward(req, resp);
             }
             else {
                 getServletContext().getRequestDispatcher("/notfound.jsp").forward(req, resp);
