@@ -1,8 +1,15 @@
 package com.example.servletapp.Dao;
 
-import com.example.servletapp.DataSource;
 import com.example.servletapp.models.UserModel;
+import com.example.servletapp.utils.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,59 +28,91 @@ public class UserDaoClass implements UserDao{
     }
 
     @Override
-    public Optional<UserModel> find(String s) throws SQLException {
-        return Optional.empty();
+    public UserModel find(String s) throws SQLException {
+        return null;
     }
 
     @Override
     public List<UserModel> findAll() throws SQLException {
         List<UserModel> users = new ArrayList<>();
-        String sql = "SELECT * FROM users";
 
-        Connection conn = DataSource.getConnection();
-        Statement stat = conn.createStatement();
-        ResultSet resultSet = stat.executeQuery(sql);
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String username = resultSet.getString("username");
-            String realName = resultSet.getString("real_name");
-            String password = resultSet.getString("password");
-
-            UserModel vinyl = new UserModel(id, username, realName, password);
-            users.add(vinyl);
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<UserModel> cq = cb.createQuery(UserModel.class);
+            Root<UserModel> rootEntry = cq.from(UserModel.class);
+            CriteriaQuery<UserModel> all = cq.select(rootEntry);
+            TypedQuery<UserModel> allQuery = session.createQuery(all);
+            users = allQuery.getResultList();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return users;
     }
 
     @Override
-    public boolean save(UserModel userModel) throws SQLException {
-        String sql = "INSERT INTO users (username, real_name, password) VALUES (?, ?, ?)";
-        boolean rowUpdated = false;
-        Connection conn = DataSource.getConnection();
-        PreparedStatement stat = conn.prepareStatement(sql);
-        stat.setString(1, userModel.getUsername());
-        stat.setString(2, userModel.getRealName());
-        stat.setString(3, userModel.getPassword());
-        rowUpdated = stat.executeUpdate() > 0;
-        return rowUpdated;
+    public void save(UserModel userModel) throws SQLException {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            session.save(userModel);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     @Override
-    public boolean update(UserModel o) throws SQLException {
-        return false;
+    public void update(UserModel o) throws SQLException {
     }
 
     @Override
-    public boolean delete(String id) throws SQLException {
-        String sql = "DELETE FROM users WHERE id = ?";
-        boolean rowDeleted = false;
+    public void delete(String id) throws SQLException {
 
-        Connection conn = DataSource.getConnection();
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, Integer.parseInt(id));
-        rowDeleted = statement.executeUpdate() > 0;
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
-        return rowDeleted;
+            String query = "from UserModel u where u.id="+id;
+
+            Query query2 = session.createQuery(query, UserModel.class);
+
+            UserModel user= (UserModel) query2.list().get(0);
+
+            session.delete(user);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }

@@ -1,9 +1,9 @@
 package com.example.servletapp.Dao;
 
-import com.example.servletapp.ConnectionInstance;
-
-import com.example.servletapp.DataSource;
+import com.example.servletapp.models.UserModel;
 import com.example.servletapp.models.VinylModel;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,20 +34,20 @@ public class UserVinylDaoClass implements UserVinylDao{
         String author = "";
         String title = "";
 
-        Connection conn = DataSource.getConnection();
-
-        PreparedStatement stat = conn.prepareStatement(sql);
-        stat.setInt(1, user_id);
-        ResultSet resultSet = stat.executeQuery();
-
-        while (resultSet.next()) {
-            vinyl_id = resultSet.getInt("id");
-            author = resultSet.getString("author");
-            title = resultSet.getString("title");
-
-            VinylModel vinyl = new VinylModel(vinyl_id, author, title);
-            vinylInCollections.add(vinyl);
-        }
+//        Connection conn = DataSource.getConnection();
+//
+//        PreparedStatement stat = conn.prepareStatement(sql);
+//        stat.setInt(1, user_id);
+//        ResultSet resultSet = stat.executeQuery();
+//
+//        while (resultSet.next()) {
+//            vinyl_id = resultSet.getInt("id");
+//            author = resultSet.getString("author");
+//            title = resultSet.getString("title");
+//
+//            VinylModel vinyl = new VinylModel(vinyl_id, author, title);
+//            vinylInCollections.add(vinyl);
+//        }
 
         return vinylInCollections;
 
@@ -61,13 +61,44 @@ public class UserVinylDaoClass implements UserVinylDao{
                 " FROM users, vinyl" +
                 " WHERE users.username = ? AND vinyl.title = ?";
 
-        Connection conn = DataSource.getConnection();
-        PreparedStatement stat = conn.prepareStatement(sql);
+//        Connection conn = DataSource.getConnection();
+//        PreparedStatement stat = conn.prepareStatement(sql);
         boolean rowSaved = false;
-        stat.setString(1, username);
-        stat.setString(2, title);
-        rowSaved = stat.executeUpdate() > 0;
+//        stat.setString(1, username);
+//        stat.setString(2, title);
+//        rowSaved = stat.executeUpdate() > 0;
         return rowSaved;
+
+
+        Session session = null;
+        Transaction transaction = null;
+        Integer userId = null;
+
+        try {
+            transaction = session.beginTransaction();
+            UserModel user
+                    = new UserModel(user_id, lname,
+                    salary);
+            employee.setSkillSets(skillSets);
+            employeeID = (Integer)session.save(employee);
+            tx.commit();
+        }
+        catch (HibernateException e) {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+
+        // finally block
+        finally {
+
+            // Closing the sessions
+            // using close() method
+            session.close();
+        }
+
+        return employeeID;
+    }
     }
 
     @Override
@@ -75,35 +106,35 @@ public class UserVinylDaoClass implements UserVinylDao{
 
         boolean rowSaved = false;
         boolean rowVinylSaved = false;
-        Connection conn = DataSource.getConnection();
-        conn.setAutoCommit(false);
-
-        String sql = "INSERT INTO vinyl (author, title) VALUES (?, ?)";
-
-        String sql2 = "INSERT INTO user_vinyls (user_id, vinyl_id) " +
-                "SELECT users.id, vinyl.id" +
-                " FROM users, vinyl" +
-                " WHERE users.username = ? AND vinyl.title = ?";
-
-        try {
-            PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, author);
-            stat.setString(2, title);
-
-            rowVinylSaved = stat.executeUpdate() > 0;
-
-            stat = conn.prepareStatement(sql2);
-            stat.setString(1, username);
-            stat.setString(2, title);
-            rowSaved = stat.executeUpdate() > 0;
-
-            conn.commit();
-        } catch (SQLException e) {
-            conn.rollback();
-            throw e;
-        } finally {
-            conn.setAutoCommit(true);
-        }
+//        Connection conn = DataSource.getConnection();
+//        conn.setAutoCommit(false);
+//
+//        String sql = "INSERT INTO vinyl (author, title) VALUES (?, ?)";
+//
+//        String sql2 = "INSERT INTO user_vinyls (user_id, vinyl_id) " +
+//                "SELECT users.id, vinyl.id" +
+//                " FROM users, vinyl" +
+//                " WHERE users.username = ? AND vinyl.title = ?";
+//
+//        try {
+//            PreparedStatement stat = conn.prepareStatement(sql);
+//            stat.setString(1, author);
+//            stat.setString(2, title);
+//
+//            rowVinylSaved = stat.executeUpdate() > 0;
+//
+//            stat = conn.prepareStatement(sql2);
+//            stat.setString(1, username);
+//            stat.setString(2, title);
+//            rowSaved = stat.executeUpdate() > 0;
+//
+//            conn.commit();
+//        } catch (SQLException e) {
+//            conn.rollback();
+//            throw e;
+//        } finally {
+//            conn.setAutoCommit(true);
+//        }
 
         return rowSaved && rowVinylSaved;
     }
@@ -114,11 +145,11 @@ public class UserVinylDaoClass implements UserVinylDao{
         String sql = "DELETE FROM user_vinyls WHERE user_id = ? AND vinyl_id = ?";
         boolean rowDeleted = false;
 
-        Connection conn = DataSource.getConnection();
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, user_id);
-        statement.setInt(2, vinyl_id);
-        rowDeleted = statement.executeUpdate() > 0;
+//        Connection conn = DataSource.getConnection();
+//        PreparedStatement statement = conn.prepareStatement(sql);
+//        statement.setInt(1, user_id);
+//        statement.setInt(2, vinyl_id);
+//        rowDeleted = statement.executeUpdate() > 0;
 
         return rowDeleted;
     }

@@ -20,7 +20,7 @@ public class editVinylServlet extends HttpServlet {
 
         try {
             String id = req.getParameter("id");
-            VinylModel vinyl = vinylDao.find(id).get();
+            VinylModel vinyl = vinylDao.find(id);
             if(vinyl!=null) {
                 req.setAttribute("vinyl", vinyl);
                 getServletContext().getRequestDispatcher("/vinyl/editVinyl.jsp").forward(req, resp);

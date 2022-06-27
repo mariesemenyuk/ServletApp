@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.example.servletapp.models.UserModel" table="users">
+        <meta attribute="class-description">
+            This class contains developer's details.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <set name="vinyls" cascade="save-update" table="user_vinyls">
+            <key column="user_id" />
+            <many-to-many column="vinyl_id" class="com.example.servletapp.models.VinylModel"/>
+        </set>
+        <property name="username" column="username" type="string"/>
+        <property name="realName" column="real_name" type="string"/>
+        <property name="password" column="password" type="string"/>
+    </class>
+
+    <class name="com.example.servletapp.models.VinylModel" table="vinyl">
+        <meta attribute="class-description">
+            This class contains vinyl details.
+        </meta>
+        <id name="id" type="int" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="author" column="author" type="string"/>
+        <property name="title" column="title" type="string"/>
+    </class>
+</hibernate-mapping>

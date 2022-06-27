@@ -1,9 +1,23 @@
 package com.example.servletapp.models;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "vinyl")
 public class VinylModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "author")
     private String author;
+    @Column(name = "title")
     private String title;
+
+    @ManyToMany(mappedBy = "vinyls")
+    private List<UserModel> users;
 
     public VinylModel() {
     }
@@ -41,5 +55,13 @@ public class VinylModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<UserModel> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserModel> users) {
+        this.users = users;
     }
 }

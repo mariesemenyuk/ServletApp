@@ -102,4 +102,8 @@
         <servlet-name>deleteVinylFromCollection</servlet-name>
         <url-pattern>/delete-user-vinyl</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>com.example.servletapp.utils.HibernateListener</listener-class>
+    </listener>
 </web-app>

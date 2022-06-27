@@ -1,9 +1,16 @@
 package com.example.servletapp.Dao;
 
-import com.example.servletapp.ConnectionInstance;
-import com.example.servletapp.DataSource;
+import com.example.servletapp.models.UserModel;
 import com.example.servletapp.models.VinylModel;
+import com.example.servletapp.utils.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,88 +29,131 @@ public class VinylDaoClass implements VinylDao{
     }
 
     @Override
-    public Optional<VinylModel> find(String id) throws SQLException {
+    public VinylModel find(String id) throws SQLException {
+        VinylModel vinyl = new VinylModel();
 
-        String sql = "SELECT * FROM vinyl WHERE id = ?";
-        int vinyl_id = 0;
-        String author = "";
-        String title = "";
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
-        Connection conn = DataSource.getConnection();
+            vinyl = session.get(VinylModel.class, Integer.parseInt(id));
 
-        PreparedStatement stat = conn.prepareStatement(sql);
-        stat.setInt(1, Integer.parseInt(id));
-        ResultSet resultSet = stat.executeQuery();
-
-        if (resultSet.next()) {
-            vinyl_id = resultSet.getInt("id");
-            author = resultSet.getString("author");
-            title = resultSet.getString("title");
         }
-
-        return Optional.of(new VinylModel(vinyl_id, author, title));
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vinyl;
     }
 
     @Override
     public List<VinylModel> findAll() throws SQLException {
         List<VinylModel> vinylInCollections = new ArrayList<>();
-        String sql = "SELECT * FROM vinyl";
 
-        Connection conn = DataSource.getConnection();
-        Statement stat = conn.createStatement();
-        ResultSet resultSet = stat.executeQuery(sql);
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String author = resultSet.getString("author");
-            String title = resultSet.getString("title");
-
-            VinylModel vinyl = new VinylModel(id, author, title);
-            vinylInCollections.add(vinyl);
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<VinylModel> cq = cb.createQuery(VinylModel.class);
+            Root<VinylModel> rootEntry = cq.from(VinylModel.class);
+            CriteriaQuery<VinylModel> all = cq.select(rootEntry);
+            TypedQuery<VinylModel> allQuery = session.createQuery(all);
+            vinylInCollections = allQuery.getResultList();
         }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
         return vinylInCollections;
     }
 
     @Override
-    public boolean save(VinylModel vinylModel) throws SQLException {
-        String sql = "INSERT INTO vinyl (author, title) VALUES (?, ?)";
-        boolean rowSaved = false;
-        Connection conn = DataSource.getConnection();
-        PreparedStatement stat = conn.prepareStatement(sql);
-        stat.setString(1, vinylModel.getAuthor());
-        stat.setString(2, vinylModel.getTitle());
-        rowSaved = stat.executeUpdate() > 0;
-        return rowSaved;
+    public void save(VinylModel vinylModel) throws SQLException {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            session.save(vinylModel);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     @Override
-    public boolean update(VinylModel vinylModel) throws SQLException {
+    public void update(VinylModel vinylModel) throws SQLException {
 
-        String sql = "UPDATE vinyl SET author = ?, title = ?";
-        sql += " WHERE id = ?";
-        boolean rowUpdated = false;
-        Connection conn = DataSource.getConnection();
-        PreparedStatement stat = conn.prepareStatement(sql);
-        stat.setString(1, vinylModel.getAuthor());
-        stat.setString(2, vinylModel.getTitle());
-        stat.setInt(3, vinylModel.getId());
-        rowUpdated = stat.executeUpdate() > 0;
-        return rowUpdated;
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
+            session.update(vinylModel);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     @Override
-    public boolean delete(String id) throws SQLException {
+    public void delete(String id) throws SQLException {
 
-        String sql = "DELETE FROM vinyl WHERE id = ?";
-        boolean rowDeleted = false;
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
-        Connection conn = DataSource.getConnection();
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, Integer.parseInt(id));
-        rowDeleted = statement.executeUpdate() > 0;
+            String query = "from VinylModel v where v.id="+id;
 
-        return rowDeleted;
+            Query query2 = session.createQuery(query, VinylModel.class);
+
+            VinylModel vinyl= (VinylModel) query2.list().get(0);
+
+            session.delete(vinyl);
+            transaction.commit();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
-
 }
