@@ -1,6 +1,6 @@
 package com.example.servletapp.servlets.VinylController;
 
-import com.example.servletapp.Dao.VinylDaoClass;
+import com.example.servletapp.repos.VinylRepository;
 import com.example.servletapp.models.VinylModel;
 
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class listVinylServlet extends HttpServlet {
 
-    private VinylDaoClass vinylDao = VinylDaoClass.getInstance();
+    private VinylRepository vinylDao = VinylRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

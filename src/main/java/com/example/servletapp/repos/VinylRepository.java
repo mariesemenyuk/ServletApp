@@ -1,6 +1,5 @@
-package com.example.servletapp.Dao;
+package com.example.servletapp.repos;
 
-import com.example.servletapp.models.UserModel;
 import com.example.servletapp.models.VinylModel;
 import com.example.servletapp.utils.HibernateUtil;
 import org.hibernate.Session;
@@ -14,21 +13,20 @@ import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class VinylDaoClass implements VinylDao{
-    private VinylDaoClass() {
+
+public class VinylRepository {
+    private VinylRepository() {
     }
 
     private static class SingletonHelper {
-        private static final VinylDaoClass INSTANCE = new VinylDaoClass();
+        private static final VinylRepository INSTANCE = new VinylRepository();
     }
 
-    public static VinylDaoClass getInstance() {
-        return VinylDaoClass.SingletonHelper.INSTANCE;
+    public static VinylRepository getInstance() {
+        return VinylRepository.SingletonHelper.INSTANCE;
     }
 
-    @Override
     public VinylModel find(String id) throws SQLException {
         VinylModel vinyl = new VinylModel();
 
@@ -53,7 +51,6 @@ public class VinylDaoClass implements VinylDao{
         return vinyl;
     }
 
-    @Override
     public List<VinylModel> findAll() throws SQLException {
         List<VinylModel> vinylInCollections = new ArrayList<>();
 
@@ -83,7 +80,6 @@ public class VinylDaoClass implements VinylDao{
         return vinylInCollections;
     }
 
-    @Override
     public void save(VinylModel vinylModel) throws SQLException {
         Session session = null;
         Transaction transaction = null;
@@ -105,7 +101,6 @@ public class VinylDaoClass implements VinylDao{
         }
     }
 
-    @Override
     public void update(VinylModel vinylModel) throws SQLException {
 
         Session session = null;
@@ -128,7 +123,6 @@ public class VinylDaoClass implements VinylDao{
         }
     }
 
-    @Override
     public void delete(String id) throws SQLException {
 
         Session session = null;

@@ -18,7 +18,7 @@ public class UserModel {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "user_vinyls",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "vinyl_id") })
@@ -78,5 +78,11 @@ public class UserModel {
 
     public void setVinyls(Set<VinylModel> vinyls) {
         this.vinyls = vinyls;
+    }
+
+
+    public void addVinyl(VinylModel vinylModel) {
+        vinyls.add(vinylModel);
+        vinylModel.getUsers().add(this);
     }
 }

@@ -1,26 +1,24 @@
 package com.example.servletapp.servlets.UserVinylsController;
 
-import com.example.servletapp.Dao.UserVinylDaoClass;
-import com.example.servletapp.Dao.VinylDaoClass;
+import com.example.servletapp.repos.UserVinylRepository;
 import com.example.servletapp.models.VinylModel;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 public class listUserVinylServlet extends HttpServlet {
 
-    private UserVinylDaoClass userVinylDao = UserVinylDaoClass.getInstance();
+    private UserVinylRepository userVinylDao = UserVinylRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<VinylModel> listVinyl = null;
+        Set<VinylModel> listVinyl = null;
         String user_id = "";
         try {
             user_id = req.getParameter("id");

@@ -1,6 +1,6 @@
 package com.example.servletapp.servlets.UserController;
 
-import com.example.servletapp.Dao.UserDaoClass;
+import com.example.servletapp.repos.UserRepository;
 import com.example.servletapp.models.UserModel;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class addUserServlet extends HttpServlet {
 
-    private UserDaoClass userDao = UserDaoClass.getInstance();
+    private UserRepository userDao = UserRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

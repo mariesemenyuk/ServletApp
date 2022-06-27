@@ -1,4 +1,4 @@
-package com.example.servletapp.Dao;
+package com.example.servletapp.repos;
 
 import com.example.servletapp.models.UserModel;
 import com.example.servletapp.utils.HibernateUtil;
@@ -6,33 +6,22 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public class UserDaoClass implements UserDao{
-    private UserDaoClass() {
+public class UserRepository {
+    private UserRepository() {
     }
 
     private static class SingletonHelper {
-        private static final UserDaoClass INSTANCE = new UserDaoClass();
+        private static final UserRepository INSTANCE = new UserRepository();
     }
 
-    public static UserDaoClass getInstance() {
+    public static UserRepository getInstance() {
         return SingletonHelper.INSTANCE;
     }
 
-    @Override
-    public UserModel find(String s) throws SQLException {
-        return null;
-    }
-
-    @Override
     public List<UserModel> findAll() throws SQLException {
         List<UserModel> users = new ArrayList<>();
 
@@ -42,12 +31,11 @@ public class UserDaoClass implements UserDao{
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
 
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<UserModel> cq = cb.createQuery(UserModel.class);
-            Root<UserModel> rootEntry = cq.from(UserModel.class);
-            CriteriaQuery<UserModel> all = cq.select(rootEntry);
-            TypedQuery<UserModel> allQuery = session.createQuery(all);
-            users = allQuery.getResultList();
+            // resolve n+1 problem
+            String hql = "FROM UserModel U left join fetch U.vinyls";
+            Query query = session.createQuery(hql, UserModel.class);
+            users = query.list();
+
         }
         catch (Exception e) {
             if (transaction != null) {
@@ -61,7 +49,6 @@ public class UserDaoClass implements UserDao{
         return users;
     }
 
-    @Override
     public void save(UserModel userModel) throws SQLException {
         Session session = null;
         Transaction transaction = null;
@@ -83,11 +70,6 @@ public class UserDaoClass implements UserDao{
         }
     }
 
-    @Override
-    public void update(UserModel o) throws SQLException {
-    }
-
-    @Override
     public void delete(String id) throws SQLException {
 
         Session session = null;
@@ -115,4 +97,5 @@ public class UserDaoClass implements UserDao{
             }
         }
     }
+
 }
