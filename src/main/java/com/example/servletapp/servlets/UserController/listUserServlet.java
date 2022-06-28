@@ -1,11 +1,8 @@
 package com.example.servletapp.servlets.UserController;
 
-import com.example.servletapp.Dao.UserDaoClass;
-import com.example.servletapp.Dao.VinylDaoClass;
+import com.example.servletapp.repos.UserRepository;
 import com.example.servletapp.models.UserModel;
-import com.example.servletapp.models.VinylModel;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +13,7 @@ import java.util.List;
 
 public class listUserServlet extends HttpServlet {
 
-    private UserDaoClass userDao = UserDaoClass.getInstance();
+    private UserRepository userDao = UserRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

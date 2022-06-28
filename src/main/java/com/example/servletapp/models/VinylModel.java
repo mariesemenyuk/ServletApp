@@ -1,45 +1,48 @@
 package com.example.servletapp.models;
 
-public class VinylModel {
-    private int id;
-    private String author;
-    private String title;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "vinyl")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class VinylModel extends BaseModel{
+
+    @Column(name = "country_issued")
+    private String countryIssued;
+    @Column(name = "price")
+    private int price;
+
+    @ManyToMany(mappedBy = "vinyls")
+    private List<UserModel> users;
 
     public VinylModel() {
     }
 
-    public VinylModel(String author, String title) {
-        this.author = author;
-        this.title = title;
+    public String getCountryIssued() {
+        return countryIssued;
     }
 
-    public VinylModel(int id, String author, String title) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
+    public void setCountryIssued(String countryIssued) {
+        this.countryIssued = countryIssued;
     }
 
-    public int getId() {
-        return id;
+    public List<UserModel> getUsers() {
+        return users;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUsers(List<UserModel> users) {
+        this.users = users;
     }
 
-    public String getAuthor() {
-        return author;
+    public int getPrice() {
+        return price;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

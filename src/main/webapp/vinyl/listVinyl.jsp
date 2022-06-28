@@ -18,6 +18,8 @@
                 <th>No</th>
                 <th>Author</th>
                 <th>Title</th>
+                <th>Country Issued</th>
+                <th>Price</th>
             </tr>
             </thead>
             <tbody>
@@ -28,6 +30,8 @@
                     <td>${count}</td>
                     <td>${vinyl.author}</td>
                     <td>${vinyl.title}</td>
+                    <td>${vinyl.countryIssued}</td>
+                    <td>${vinyl.price}</td>
                     <td><a href="/edit-vinyl?id=<c:out value='${vinyl.id}' />">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp; <a href="/delete-vinyl?id=<c:out value='${vinyl.id}' />">Delete</a>
                     </td>

@@ -1,7 +1,6 @@
 package com.example.servletapp.servlets.UserController;
 
-import com.example.servletapp.Dao.UserDaoClass;
-import com.example.servletapp.Dao.VinylDaoClass;
+import com.example.servletapp.repos.UserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 
 public class deleteUserServlet extends HttpServlet {
 
-    private UserDaoClass userDao = UserDaoClass.getInstance();
+    private UserRepository userDao = UserRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

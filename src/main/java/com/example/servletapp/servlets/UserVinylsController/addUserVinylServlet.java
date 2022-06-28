@@ -1,9 +1,6 @@
 package com.example.servletapp.servlets.UserVinylsController;
 
-import com.example.servletapp.Dao.UserVinylDao;
-import com.example.servletapp.Dao.UserVinylDaoClass;
-import com.example.servletapp.Dao.VinylDaoClass;
-import com.example.servletapp.models.VinylModel;
+import com.example.servletapp.repos.UserVinylRepository;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +12,7 @@ import java.sql.SQLException;
 
 public class addUserVinylServlet extends HttpServlet {
 
-    private UserVinylDaoClass userVinylDao = UserVinylDaoClass.getInstance();
+    private UserVinylRepository userVinylDao = UserVinylRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

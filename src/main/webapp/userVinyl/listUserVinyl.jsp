@@ -31,6 +31,7 @@
                     <td>${count}</td>
                     <td>${vinyl.author}</td>
                     <td>${vinyl.title}</td>
+                    <td>${vinyl.countryIssued}</td>
                     <td><a href="/delete-user-vinyl?id=<c:out value="${vinyl.id}" />&userid=<c:out value="${userid}" />">Delete from the Collection</a>
                     </td>
                 </tr>
