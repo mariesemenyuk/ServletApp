@@ -1,20 +1,20 @@
 package com.example.servletapp.models;
 
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "vinyl")
-public class VinylModel {
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class VinylModel extends BaseModel{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-    @Column(name = "author")
-    private String author;
-    @Column(name = "title")
-    private String title;
+    @Column(name = "country_issued")
+    private String countryIssued;
+    @Column(name = "price")
+    private int price;
 
     @ManyToMany(mappedBy = "vinyls")
     private List<UserModel> users;
@@ -22,39 +22,12 @@ public class VinylModel {
     public VinylModel() {
     }
 
-    public VinylModel(String author, String title) {
-        this.author = author;
-        this.title = title;
+    public String getCountryIssued() {
+        return countryIssued;
     }
 
-    public VinylModel(int id, String author, String title) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCountryIssued(String countryIssued) {
+        this.countryIssued = countryIssued;
     }
 
     public List<UserModel> getUsers() {
@@ -63,5 +36,13 @@ public class VinylModel {
 
     public void setUsers(List<UserModel> users) {
         this.users = users;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

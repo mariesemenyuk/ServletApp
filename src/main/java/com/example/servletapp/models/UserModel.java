@@ -24,6 +24,18 @@ public class UserModel {
             inverseJoinColumns = { @JoinColumn(name = "vinyl_id") })
     private Set<VinylModel> vinyls;
 
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "user_books",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "book_id") })
+    private Set<BookModel> books;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "user_cds",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "cd_id") })
+    private Set<CdModel> cds;
+
     public UserModel(int id, String username, String realName, String password) {
         this.id = id;
         this.username = username;
@@ -80,9 +92,24 @@ public class UserModel {
         this.vinyls = vinyls;
     }
 
-
     public void addVinyl(VinylModel vinylModel) {
         vinyls.add(vinylModel);
         vinylModel.getUsers().add(this);
+    }
+
+    public Set<BookModel> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<BookModel> books) {
+        this.books = books;
+    }
+
+    public Set<CdModel> getCds() {
+        return cds;
+    }
+
+    public void setCds(Set<CdModel> cds) {
+        this.cds = cds;
     }
 }

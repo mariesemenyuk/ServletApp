@@ -1,9 +1,8 @@
-package com.example.servletapp.servlets;
+package com.example.servletapp.servlets.VinylController;
 
-import com.example.servletapp.repos.VinylRepository;
 import com.example.servletapp.models.VinylModel;
+import com.example.servletapp.repos.VinylRepository;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,23 +11,22 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class listUserVinylServlet extends HttpServlet {
+public class listVinylOver2000Servlet extends HttpServlet {
 
     private VinylRepository vinylDao = VinylRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("listVinyl.jsp");
 
         List<VinylModel> listVinyl = null;
         try {
-            listVinyl = vinylDao.findAll();
+            listVinyl = vinylDao.findMoreThanTwoThousand();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         req.setAttribute("vinylList", listVinyl);
 
-        getServletContext().getRequestDispatcher("/listVinyl.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/vinyl/listVinyl.jsp").forward(req, resp);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.servletapp.repos;
 
+import com.example.servletapp.models.UserModel;
 import com.example.servletapp.models.VinylModel;
 import com.example.servletapp.utils.HibernateUtil;
 import org.hibernate.Session;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class VinylRepository {
@@ -124,7 +126,6 @@ public class VinylRepository {
     }
 
     public void delete(String id) throws SQLException {
-
         Session session = null;
         Transaction transaction = null;
         try {
@@ -149,5 +150,66 @@ public class VinylRepository {
                 session.close();
             }
         }
+    }
+
+    public void addMillionsVinyls() {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            for (int i = 0; i < 200_000; i++) {
+                VinylModel vinyl = new VinylModel();
+                vinyl.setAuthor("Author" + i);
+                vinyl.setTitle("Title" + i);
+                vinyl.setCountryIssued("AnyCountry");
+                vinyl.setPrice((int) (Math.random()*(4000 - 1000 + 1) + 1000));
+                session.save(vinyl);
+                if (i % 1000 == 0) {
+                    session.flush();
+                    session.clear();
+                }
+            }
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+    }
+
+    public List<VinylModel> findMoreThanTwoThousand() throws SQLException {
+        List<VinylModel> vinylInCollections = new ArrayList<>();
+
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            String hql = "FROM VinylModel V WHERE price > 3000";
+            Query query = session.createQuery(hql, VinylModel.class).setCacheable(true);
+            vinylInCollections = query.list();
+
+            List<VinylModel> vinyls = session.createQuery(hql, VinylModel.class).list();
+        }
+        catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+        return vinylInCollections;
     }
 }

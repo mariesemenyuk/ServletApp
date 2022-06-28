@@ -38,7 +38,14 @@ public class editVinylServlet extends HttpServlet {
             String id = req.getParameter("id");
             String author = req.getParameter("author");
             String title = req.getParameter("title");
-            VinylModel vinyl = new VinylModel(Integer.parseInt(id), author, title);
+            String country = req.getParameter("country");
+            Integer price = Integer.parseInt(req.getParameter("price"));
+            VinylModel vinyl = new VinylModel();
+            vinyl.setId(Integer.parseInt(id));
+            vinyl.setAuthor(author);
+            vinyl.setTitle(title);
+            vinyl.setCountryIssued(country);
+            vinyl.setPrice(price);
             vinylDao.update(vinyl);
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
         }

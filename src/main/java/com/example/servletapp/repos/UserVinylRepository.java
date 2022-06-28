@@ -97,7 +97,9 @@ public class UserVinylRepository {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
 
-            VinylModel vinyl = new VinylModel(author, title);
+            VinylModel vinyl = new VinylModel();
+            vinyl.setAuthor(author);
+            vinyl.setTitle(title);
             vinylDao.save(vinyl);
 
             save(username, title);

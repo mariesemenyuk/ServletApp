@@ -1,7 +1,9 @@
-package com.example.servletapp.servlets.VinylController;
+package com.example.servletapp.servlets;
 
-import com.example.servletapp.repos.VinylRepository;
-import com.example.servletapp.models.VinylModel;
+import com.example.servletapp.models.BookModel;
+import com.example.servletapp.models.CdModel;
+import com.example.servletapp.repos.BookRepository;
+import com.example.servletapp.repos.CdRepository;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,37 +13,35 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class addVinylServlet extends HttpServlet {
+public class addCdServlet extends HttpServlet {
 
-    private VinylRepository vinylDao = VinylRepository.getInstance();
+    private CdRepository cdRepository = CdRepository.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/vinyl/addVinyl.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/addCd.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            addVinyl(req, resp);
+            addCd(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    private void addVinyl(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException{
+    private void addCd(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException{
         String author = req.getParameter("author");
         String title = req.getParameter("title");
-        String country = req.getParameter("country");
-        Integer price = Integer.parseInt(req.getParameter("price"));
-        VinylModel newVinyl = new VinylModel();
-        newVinyl.setAuthor(author);
-        newVinyl.setTitle(title);
-        newVinyl.setCountryIssued(country);
-        newVinyl.setPrice(price);
-        vinylDao.save(newVinyl);
+        Integer yearIssued = Integer.parseInt(req.getParameter("year"));
+        CdModel newCd = new CdModel();
+        newCd.setAuthor(author);
+        newCd.setTitle(title);
+        newCd.setYearIssued(yearIssued);
+        cdRepository.save(newCd);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(req, resp);
     }

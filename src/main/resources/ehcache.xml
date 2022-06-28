@@ -7,10 +7,10 @@ timeToLiveSeconds="60"
 overflowToDisk="true"
 />
 
-<cache name="Developer"
-       maxElementsInMemory="200"
+<cache name="VinylModel"
+       maxElementsInMemory="500"
        eternal="true"
        timeToIdleSeconds="0"
-       timeToLiveSeconds="0"
+       timeToLiveSeconds="100"
        overflowToDisk="false"
 />

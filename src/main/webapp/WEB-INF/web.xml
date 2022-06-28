@@ -103,6 +103,60 @@
         <url-pattern>/delete-user-vinyl</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>addBook</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.addBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addBook</servlet-name>
+        <url-pattern>/add-book</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>listBooks</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.listBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>listBooks</servlet-name>
+        <url-pattern>/list-books</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addCd</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.addCdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addCd</servlet-name>
+        <url-pattern>/add-cd</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>listCds</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.listCdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>listCds</servlet-name>
+        <url-pattern>/list-cds</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addMillions</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.VinylController.addMillionsVinylServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addMillions</servlet-name>
+        <url-pattern>/add_millions</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>listExpVinyl</servlet-name>
+        <servlet-class>com.example.servletapp.servlets.VinylController.listVinylOver2000Servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>listExpVinyl</servlet-name>
+        <url-pattern>/list-expens-vinyl</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>com.example.servletapp.utils.HibernateListener</listener-class>
     </listener>

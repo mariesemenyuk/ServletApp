@@ -20,7 +20,10 @@
             1111
         </property>
 
-        <mapping resource="User.hbm.xml"/>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+        <property name="hibernate.cache.default_cache_concurrency_strategy">read-write</property>
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.internal.EhcacheRegionFactory</property>
 
     </session-factory>
 </hibernate-configuration>

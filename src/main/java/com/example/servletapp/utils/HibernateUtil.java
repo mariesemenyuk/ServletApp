@@ -3,6 +3,8 @@ package com.example.servletapp.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.servletapp.models.BookModel;
+import com.example.servletapp.models.CdModel;
 import com.example.servletapp.models.UserModel;
 import com.example.servletapp.models.VinylModel;
 import org.hibernate.SessionFactory;
@@ -51,7 +53,9 @@ public class HibernateUtil {
                 registry = registryBuilder.build();
                 MetadataSources sources = new MetadataSources(registry)
                         .addAnnotatedClass(UserModel.class)
-                        .addAnnotatedClass(VinylModel.class);
+                        .addAnnotatedClass(VinylModel.class)
+                        .addAnnotatedClass(BookModel.class)
+                        .addAnnotatedClass(CdModel.class);
                 Metadata metadata = sources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
             } catch (Exception e) {

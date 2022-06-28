@@ -62,5 +62,8 @@
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-hikaricp:5.4.3.Final" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:4.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.0-alpha1" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-ehcache:5.6.7.Final" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache:2.10.6" level="project" />
+    <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.9.7" level="project" />
   </component>
 </module>
